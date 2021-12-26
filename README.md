@@ -13,7 +13,7 @@ Python 3.8.0
 
 All required packages in requirements.txt file.
 
-### Working with pdf-processing:
+### Working with document-statistics:
 1. Copy text you need to process to the _processFile.txt_ file and save it.
 4. Set _startIndex_ and  _amountOfWordsToDisplay_ variables accordingly.
 5. Run the script.
