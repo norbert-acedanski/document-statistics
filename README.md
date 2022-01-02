@@ -8,10 +8,9 @@ Python 3.8.0
 
 # Getting started
 ### Requirements
-##### packages:
-- matplotlib (pip install matplotlib)
 
 All required packages in requirements.txt file.
+To install all required packages, type _pip install -r requirements.txt_ int the terminal.
 
 ### Working with document-statistics:
 1. Copy text you need to process to the _processFile.txt_ file and save it.
