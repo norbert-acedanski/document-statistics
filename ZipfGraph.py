@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import re
+import sys
 
 fileName = "processFile.txt"
 startIndex = 0
@@ -7,10 +8,17 @@ amountOfWordsToDisplay = 100
 
 def loadData():
     global data
-    with open(fileName, "r", encoding='utf-8') as inputFile:
-        data = inputFile.readlines()
-        for (lineNumber, line) in enumerate(data):
-            data[lineNumber] = line.replace('\n', '')
+    try:
+        with open(fileName, "r", encoding='utf-8') as inputFile:
+            data = inputFile.readlines()
+            for (lineNumber, line) in enumerate(data):
+                data[lineNumber] = line.replace('\n', '')
+    except OSError:
+        print("File \"" + fileName + "\" could not be opened. Check file name or file path.")
+        sys.exit()
+    if len(data) == 0:
+        print("No data found in given a file!")
+        sys.exit()
     return data
 
 def processData(data):
@@ -21,7 +29,7 @@ def processData(data):
             isolatedWord = isolatedWord.replace(',', '.') if ',' in isolatedWord else isolatedWord
             try:
                 wordWithNumbersHandled = float(isolatedWord)
-            except:
+            except ValueError:
                 wordWithNumbersHandled = re.sub('[,.]', '', isolatedWord)
 
             if wordWithNumbersHandled in wordCount:
