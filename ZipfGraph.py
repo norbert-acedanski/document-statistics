@@ -5,6 +5,7 @@ import sys
 fileName = "processFile.txt"
 startIndex = 0
 amountOfWordsToDisplay = 100
+listOfCharactersToCut = ["‘", "’", "'", "–", "-"]
 
 def loadData():
     global data
@@ -25,13 +26,18 @@ def processData(data):
     wordCount = {}
     for line in data:
         for word in line.split():
-            isolatedWord = re.sub('[!?@#$\[\]<>%^&*()]', '', word).lower()
+            isolatedWord = re.sub('[!?@#$\[\]<>%^&*():;]', '', word).lower()
             isolatedWord = isolatedWord.replace(',', '.') if ',' in isolatedWord else isolatedWord
             try:
                 wordWithNumbersHandled = float(isolatedWord)
             except ValueError:
                 wordWithNumbersHandled = re.sub('[,.]', '', isolatedWord)
-
+                if wordWithNumbersHandled[0] in listOfCharactersToCut:
+                    wordWithNumbersHandled = wordWithNumbersHandled[1:]
+                if wordWithNumbersHandled == "":
+                    continue
+                if wordWithNumbersHandled[-1] in listOfCharactersToCut:
+                    wordWithNumbersHandled = wordWithNumbersHandled[:-1]
             if wordWithNumbersHandled in wordCount:
                 wordCount[str(wordWithNumbersHandled)] += 1
             else:
