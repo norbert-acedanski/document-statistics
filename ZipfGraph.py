@@ -4,7 +4,7 @@ import sys
 
 fileName = "processFile.txt"
 startIndex = 0
-amountOfWordsToDisplay = 500
+amountOfWordsToDisplay = 100
 
 def loadData():
     global data
@@ -61,14 +61,14 @@ def plotZipf(wordsList, numberOfWordInstancesList):
     plt.ion()
     plt.show()
     while contunueGraph == "y":
+        if startIndex + (multiplyFactor - 1)*amountOfWordsToDisplay > len(wordsList):
+            print("No more words to graph")
+            input("To close window, press Enter")
+            break
         plt.clf()
         plt.title("Zipf Graph")
         plt.xlabel("Word in given document")
         plt.ylabel("Amount of times the word occurs in the document")
-        if (multiplyFactor - 1)*amountOfWordsToDisplay > len(wordsList):
-            print("No more words to graph")
-            input("TO close window, press Enter")
-            break
         plt.plot(wordsList[startIndex + (multiplyFactor - 1)*amountOfWordsToDisplay: startIndex + multiplyFactor*amountOfWordsToDisplay], numberOfWordInstancesList[startIndex + (multiplyFactor - 1)*amountOfWordsToDisplay: startIndex + multiplyFactor*amountOfWordsToDisplay], marker= "o")
         plt.xticks(rotation=90)
         plt.grid(True)
