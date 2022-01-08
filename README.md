@@ -15,9 +15,10 @@ To install all required packages, type "_pip install -r requirements.txt_" in th
 
 ### Working with document-statistics:
 1. Copy text you need to process to the _processFile.txt_ file and save it.
-4. Set _startIndex_ and  _amountOfWordsToDisplay_ variables accordingly.
-5. Run the script.
-6. After successful execution, 2 files should be created: _numberOfWordInstancesList.txt_ and _wordsList.txt_ and graph of selected range of words should appear.
+2. Set _startIndex_ and  _amountOfWordsToDisplay_ variables accordingly.
+3. Run the script.
+4. After successful execution, 2 files should be created: _numberOfWordInstancesList.txt_ and _wordsList.txt_ and graph of selected range of words should appear.
+5. When a graph of selected range becomes visible, you can type _y_ in the terminal to see next chunk of the same size, or type _n_ to close the graph and quit the program.
 
 # Usage
 Allows you to quickly check the frequency of words in a given file.
