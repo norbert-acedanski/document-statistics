@@ -4,7 +4,7 @@ import sys
 
 fileName = "processFile.txt"
 startIndex = 0
-amountOfWordsToDisplay = 100
+amountOfWordsToDisplay = 500
 
 def loadData():
     global data
@@ -49,19 +49,39 @@ def saveToFiles(wordsList, numberOfWordInstancesList):
             wordsListFile.write(wordsList[count] + '\n')
             numberOfWordInstancesListFile.write(str(numberOfWordInstancesList[count]) + '\n')
 
+def printNumberOfWordsInGivenFile():
+    print("Number of words in a given file: " + str(len(wordsList)))
+
 def plotZipf(wordsList, numberOfWordInstancesList):
     for (number, word) in enumerate(wordsList):
         wordsList[number] = str(number + 1) + ". " + str(word)
+    contunueGraph = "y"
+    multiplyFactor = 1
     plt.figure("Zipf Graph")
-    plt.title("Zipf Graph")
-    plt.xlabel("Word in given document")
-    plt.ylabel("Amount of times the word occurs in the document")
-    plt.plot(wordsList[startIndex: startIndex + amountOfWordsToDisplay], numberOfWordInstancesList[startIndex: startIndex + amountOfWordsToDisplay])
-    plt.xticks(rotation=90)
+    plt.ion()
     plt.show()
+    while contunueGraph == "y":
+        plt.clf()
+        plt.title("Zipf Graph")
+        plt.xlabel("Word in given document")
+        plt.ylabel("Amount of times the word occurs in the document")
+        if (multiplyFactor - 1)*amountOfWordsToDisplay > len(wordsList):
+            print("No more words to graph")
+            input("TO close window, press Enter")
+            break
+        plt.plot(wordsList[startIndex + (multiplyFactor - 1)*amountOfWordsToDisplay: startIndex + multiplyFactor*amountOfWordsToDisplay], numberOfWordInstancesList[startIndex + (multiplyFactor - 1)*amountOfWordsToDisplay: startIndex + multiplyFactor*amountOfWordsToDisplay], marker= "o")
+        plt.xticks(rotation=90)
+        plt.grid(True)
+        plt.draw()
+        contunueGraph = input("Show next " + str(amountOfWordsToDisplay) + " words? (y/N): ").lower()
+        while contunueGraph != "y" and contunueGraph != "n":
+            contunueGraph = input("Unknown command. Try again!: ")
+        multiplyFactor += 1
+    print("Closing window")
 
 if __name__ == '__main__':
     data = loadData()
     wordsList, numberOfWordInstancesList = processData(data)
     saveToFiles(wordsList, numberOfWordInstancesList)
+    printNumberOfWordsInGivenFile()
     plotZipf(wordsList, numberOfWordInstancesList)
