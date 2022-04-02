@@ -15,9 +15,9 @@ To install all required packages, type "_pip install -r requirements.txt_" in th
 
 ### Working with document-statistics:
 1. Copy text you need to process to the _processFile.txt_ file and save it.
-2. Set _startIndex_ and  _amountOfWordsToDisplay_ variables accordingly.
+2. Set _startIndex_ and  *amount_of_words_to_display* variables accordingly.
 3. Run the script.
-4. After successful execution, 2 files should be created: _numberOfWordInstancesList.txt_ and _wordsList.txt_ and graph of selected range of words should appear.
+4. After successful execution, 2 files should be created: *number_of_word_instances_list.txt* and *words_list.txt* and graph of selected range of words should appear.
 5. When a graph of selected range becomes visible, you can type _y_ in the terminal to see next chunk of the same size, or type _n_ to close the graph and quit the program.
 
 # Usage
