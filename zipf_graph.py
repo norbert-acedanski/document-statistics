@@ -2,72 +2,72 @@ import matplotlib.pyplot as plt
 import re
 import sys
 
-fileName = "processFile.txt"
-startIndex = 0
-amountOfWordsToDisplay = 100
-listOfCharactersToCut = ["‘", "’", "'", "–", "-"]
+file_name = "process_file.txt"
+start_index = 0
+amount_of_words_to_display = 100
+list_of_characters_to_cut = ["‘", "’", "'", "–", "-"]
 
-def loadData():
-    global data
+def load_data():
+    # global data
     try:
-        with open(fileName, "r", encoding='utf-8') as inputFile:
-            data = inputFile.readlines()
-            for (lineNumber, line) in enumerate(data):
-                data[lineNumber] = line.replace('\n', '')
+        with open(file_name, "r", encoding='utf-8') as input_file:
+            data = input_file.readlines()
+            for (line_number, line) in enumerate(data):
+                data[line_number] = line.replace('\n', '')
     except OSError:
-        print("File \"" + fileName + "\" could not be opened. Check file name or file path.")
+        print("File \"" + file_name + "\" could not be opened. Check file name or file path.")
         sys.exit()
     if len(data) == 0:
         print("No data found in given a file!")
         sys.exit()
     return data
 
-def processData(data):
-    wordCount = {}
+def process_data(data):
+    word_count = {}
     for line in data:
         for word in line.split():
-            isolatedWord = re.sub('[!?@#$\[\]<>%^&*():;]', '', word).lower()
-            isolatedWord = isolatedWord.replace(',', '.') if ',' in isolatedWord else isolatedWord
+            isolated_word = re.sub('[!?@#$\[\]<>%^&*():;]', '', word).lower()
+            isolated_word = isolated_word.replace(',', '.') if ',' in isolated_word else isolated_word
             try:
-                wordWithNumbersHandled = float(isolatedWord)
+                word_with_numbers_handled = float(isolated_word)
             except ValueError:
-                wordWithNumbersHandled = re.sub('[,.]', '', isolatedWord)
-                if wordWithNumbersHandled[0] in listOfCharactersToCut:
-                    wordWithNumbersHandled = wordWithNumbersHandled[1:]
-                if wordWithNumbersHandled == "":
+                word_with_numbers_handled = re.sub('[,.]', '', isolated_word)
+                if word_with_numbers_handled[0] in list_of_characters_to_cut:
+                    word_with_numbers_handled = word_with_numbers_handled[1:]
+                if word_with_numbers_handled == "":
                     continue
-                if wordWithNumbersHandled[-1] in listOfCharactersToCut:
-                    wordWithNumbersHandled = wordWithNumbersHandled[:-1]
-            if wordWithNumbersHandled in wordCount:
-                wordCount[str(wordWithNumbersHandled)] += 1
+                if word_with_numbers_handled[-1] in list_of_characters_to_cut:
+                    word_with_numbers_handled = word_with_numbers_handled[:-1]
+            if word_with_numbers_handled in word_count:
+                word_count[str(word_with_numbers_handled)] += 1
             else:
-                wordCount[str(wordWithNumbersHandled)] = 1
-    sortedWordCount = sorted(wordCount.items(), key=lambda x: x[1], reverse=True)
-    wordsList, numberOfWordInstancesList = [], []
-    for pair in sortedWordCount:
-        wordsList.append(pair[0])
-        numberOfWordInstancesList.append(pair[1])
-    return wordsList, numberOfWordInstancesList
+                word_count[str(word_with_numbers_handled)] = 1
+    sorted_word_count = sorted(word_count.items(), key=lambda x: x[1], reverse=True)
+    words_list, number_of_word_instances_list = [], []
+    for pair in sorted_word_count:
+        words_list.append(pair[0])
+        number_of_word_instances_list.append(pair[1])
+    return words_list, number_of_word_instances_list
 
-def saveToFiles(wordsList, numberOfWordInstancesList):
-    with open("wordsList.txt", "w", encoding='utf-8') as wordsListFile, open("numberOfWordInstancesList.txt", "w", encoding='utf-8') as numberOfWordInstancesListFile:
-        for count in range(len(wordsList)):
-            wordsListFile.write(wordsList[count] + '\n')
-            numberOfWordInstancesListFile.write(str(numberOfWordInstancesList[count]) + '\n')
+def save_to_files(words_list, number_of_word_instances_list):
+    with open("words_list.txt", "w", encoding='utf-8') as words_list_file, open("number_of_word_instances_list.txt", "w", encoding='utf-8') as number_of_word_instances_list_file:
+        for count in range(len(words_list)):
+            words_list_file.write(words_list[count] + '\n')
+            number_of_word_instances_list_file.write(str(number_of_word_instances_list[count]) + '\n')
 
-def printNumberOfWordsInGivenFile():
-    print("Number of words in a given file: " + str(len(wordsList)))
+def print_number_of_words_in_given_file():
+    print("Number of words in a given file: " + str(len(words_list)))
 
-def plotZipf(wordsList, numberOfWordInstancesList):
-    for (number, word) in enumerate(wordsList):
-        wordsList[number] = str(number + 1) + ". " + str(word)
-    contunueGraph = "y"
-    multiplyFactor = 1
+def plot_zipf(words_list, number_of_word_instances_list):
+    for (number, word) in enumerate(words_list):
+        words_list[number] = str(number + 1) + ". " + str(word)
+    contunue_graph = "y"
+    multiply_factor = 1
     plt.figure("Zipf Graph")
     plt.ion()
     plt.show()
-    while contunueGraph == "y":
-        if startIndex + (multiplyFactor - 1)*amountOfWordsToDisplay > len(wordsList):
+    while contunue_graph == "y":
+        if start_index + (multiply_factor - 1)*amount_of_words_to_display > len(words_list):
             print("No more words to graph")
             input("To close window, press Enter")
             break
@@ -75,19 +75,19 @@ def plotZipf(wordsList, numberOfWordInstancesList):
         plt.title("Zipf Graph")
         plt.xlabel("Word in given document")
         plt.ylabel("Amount of times the word occurs in the document")
-        plt.plot(wordsList[startIndex + (multiplyFactor - 1)*amountOfWordsToDisplay: startIndex + multiplyFactor*amountOfWordsToDisplay], numberOfWordInstancesList[startIndex + (multiplyFactor - 1)*amountOfWordsToDisplay: startIndex + multiplyFactor*amountOfWordsToDisplay], marker= "o")
+        plt.plot(words_list[start_index + (multiply_factor - 1)*amount_of_words_to_display: start_index + multiply_factor*amount_of_words_to_display], number_of_word_instances_list[start_index + (multiply_factor - 1)*amount_of_words_to_display: start_index + multiply_factor*amount_of_words_to_display], marker= "o")
         plt.xticks(rotation=90)
         plt.grid(True)
         plt.draw()
-        contunueGraph = input("Show next " + str(amountOfWordsToDisplay) + " words? (y/N): ").lower()
-        while contunueGraph != "y" and contunueGraph != "n":
-            contunueGraph = input("Unknown command. Try again!: ")
-        multiplyFactor += 1
+        contunue_graph = input("Show next " + str(amount_of_words_to_display) + " words? (y/N): ").lower()
+        while contunue_graph != "y" and contunue_graph != "n":
+            contunue_graph = input("Unknown command. Try again!: ")
+        multiply_factor += 1
     print("Closing window")
 
 if __name__ == '__main__':
-    data = loadData()
-    wordsList, numberOfWordInstancesList = processData(data)
-    saveToFiles(wordsList, numberOfWordInstancesList)
-    printNumberOfWordsInGivenFile()
-    plotZipf(wordsList, numberOfWordInstancesList)
+    data = load_data()
+    words_list, number_of_word_instances_list = process_data(data)
+    save_to_files(words_list, number_of_word_instances_list)
+    print_number_of_words_in_given_file()
+    plot_zipf(words_list, number_of_word_instances_list)
