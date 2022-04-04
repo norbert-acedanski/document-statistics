@@ -1,6 +1,6 @@
+from fileinput import FileInput
 import matplotlib.pyplot as plt
 import re
-import sys
 
 file_name = "process_file.txt"
 start_index = 0
@@ -15,11 +15,9 @@ def load_data():
             for (line_number, line) in enumerate(data):
                 data[line_number] = line.replace('\n', '')
     except OSError:
-        print("File \"" + file_name + "\" could not be opened. Check file name or file path.")
-        sys.exit()
+        raise FileNotFoundError("File \"" + file_name + "\" could not be opened. Check file name or file path.")
     if len(data) == 0:
-        print("No data found in given a file!")
-        sys.exit()
+        raise Exception("No data found in given a file!")
     return data
 
 def process_data(data):
