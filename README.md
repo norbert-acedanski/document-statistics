@@ -4,7 +4,7 @@
 Script provides zipf Graph of a given text file (graph of the number of occurrences of given words).
 
 # Built With
-Python 3.8.0
+Python 3.9.10
 
 # Getting started
 ### Requirements
