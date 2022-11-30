@@ -27,7 +27,7 @@ pip install -r requirements.txt
 # Usage
 Allows you to quickly check the frequency of words in a given file.
 
-Script project contains also a sample .txt file for processing.
+Script project contains also a sample `.txt` file for processing.
 
 # Licence
 Distributed under the MIT License. See LICENSE file for more information.
